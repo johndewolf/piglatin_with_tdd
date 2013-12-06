@@ -1,5 +1,6 @@
+
 class Word
-VOWELS = %w(a e i o u)
+  VOWELS = %w(a e i o u)
   def initialize(word)
     @word = word
   end
@@ -12,13 +13,26 @@ VOWELS = %w(a e i o u)
     @word + 'way'
   end
 
-  def consonant_translate
-    letters = @word.split('')
-    end_of_word = ''
-    until VOWELS.include?(letters[0])
-      end_of_word << letters.shift
+  def first_vowel_index
+    letters = []
+    letters << @word.split('')
+    index = letters[0].index{|letter| VOWELS.include?(letter) == true}
+    if index == nil
+      index = @word.index'y'
+      if !@word.index'y'
+        return nil
+      end
     end
-    letters.join + end_of_word + 'ay'
+    index
+  end
+
+  def consonant_translate
+
+    if first_vowel_index == nil
+      return 'Error'
+    else
+      @word[first_vowel_index..-1] + @word[0...first_vowel_index] + 'ay'
+    end
   end
 
   def translate_word

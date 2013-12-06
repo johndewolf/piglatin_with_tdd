@@ -1,16 +1,20 @@
 class PigLatinTranslation
+  attr_reader :translated_words, :untranslated_words
   def initialize(phrase)
     @phrase = phrase
+    @translated_words = []
     @untranslated_words = []
   end
 
   def split_array
-    array = @phrase.split(' ')
+    @untranslated_words << @phrase.split(' ')
   end
 
   def create_word_objects
-    split_array.each do |word|
-    @untranslated_words << word
-   end
- end
+    @untranslated_words[0].each do |word|
+    word = Word.new(word)
+    @translated_words << word.translate_word
+    end
+    @translated_words = @translated_words.join(' ')
+  end
 end
